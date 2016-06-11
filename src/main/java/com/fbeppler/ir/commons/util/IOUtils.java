@@ -1,0 +1,34 @@
+package com.fbeppler.ir.commons.util;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public final class IOUtils {
+
+	private IOUtils() {
+
+	}
+	
+	public static String readFromConsole(final String mensage) throws IOException {
+		System.out.print(mensage);
+		BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+	    return bufferRead.readLine();
+	}
+
+	public static String fromPathToString(final Path path) throws IOException {
+		return Files.readAllLines(path, StandardCharsets.UTF_8).stream().collect(Collectors.joining(" "));
+	}
+
+	public static List<Path> listTxtFiles(final String folderPath) throws IOException {
+		return Files.list(Paths.get(folderPath)).filter(p -> p.toFile().toString().endsWith("txt"))
+				.collect(Collectors.toList());
+	}
+
+}
